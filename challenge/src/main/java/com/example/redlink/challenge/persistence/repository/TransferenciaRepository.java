@@ -24,4 +24,6 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, Bi
     Optional<Transferencia> findByUserIdOrderByCreatedAtDesc(String userId);
 
     Optional<Transferencia> findTransferenciaByTransactionId(UUID transactionId);
+
+    boolean findByUserId(String userId);
 }

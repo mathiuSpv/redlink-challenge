@@ -20,6 +20,7 @@
    git clone https://github.com/mathiuSpv/redlink-challenge
    ```
 2. Abrir el proyecto (Si es con IntelliJ mejor) el pom.xml, automaticamente estan se instalan las dependencias del proyecto
+   (Caso de no ser con IntelliJ descargar Maven 4.0.0).
 3. En ese instante Ya podes correr ChallengeApplication
 
 ## Recursos disponibles
@@ -34,8 +35,12 @@
   - Password: admin
 - Si no puedes entrar es chequear application.properties dentro del  src/main
 
+## Diagrama
+- El diagrama se encuentra en docs en un [pdf](https://github.com/mathiuSpv/redlink-challenge/blob/main/docs/Diagrama%20de%20Transferencia.pdf). 
+
 ## Postman
-- Las peticiones se pueden exportar en Postman con el archivo dentro de redlink.postman_collection.json
+- Las peticiones se pueden exportar en Postman con el archivo dentro de redlink.postman_collection.json<br><br>
+- Ejemplo de peticiones:
     - ```html 
         POST http://localhost:8080/transferencia
         Content-Type: application/json

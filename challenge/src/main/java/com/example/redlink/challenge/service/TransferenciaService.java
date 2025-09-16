@@ -15,20 +15,26 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class TransferenciaService {
-
+    /*
+    * El service se encarga en armar la logica para la base de datos, aqui solo necesitamos 4 y otros
+    * de caracter utilitario en tanto el el propio service como el controller.
+     */
     private final TransferenciaRepository transferenciaRepository;
     private final Random random = new Random();
 
+    // Caso a
     public Transferencia crearTransferencia(Transferencia transferencia) {
         transferencia.setCreatedAt(OffsetDateTime.now());
         transferencia.setStatus(generarEstadoAleatorio());
         return transferenciaRepository.save(transferencia);
     }
 
+    // Caso b
     public Optional<Transferencia> consultarEstadoTransferencia(UUID transactionId) {
         return transferenciaRepository.findTransferenciaByTransactionId(transactionId);
     }
 
+    // Caso c
     public List<Transferencia> listarTransferenciaAprobadas(String userId) {
         return transferenciaRepository.findByUserIdAndStatusOrderByCreatedAtDesc(
                 userId,
@@ -36,6 +42,7 @@ public class TransferenciaService {
         );
     }
 
+    // Caso d
     public List<Transferencia> obtenerHistorialTransacciones(String userId) {
         return transferenciaRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }

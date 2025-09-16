@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,12 +19,12 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, Bi
     */
 
     // Caso de uso punto c
-    Optional<Transferencia> findByUserIdAndStatusOrderByCreatedAtDesc(String userId, TransferenciaStatus status );
+    List<Transferencia> findByUserIdAndStatusOrderByCreatedAtDesc(String userId, TransferenciaStatus status );
 
     // Caso de uso punto d
-    Optional<Transferencia> findByUserIdOrderByCreatedAtDesc(String userId);
+    List<Transferencia> findByUserIdOrderByCreatedAtDesc(String userId);
 
     Optional<Transferencia> findTransferenciaByTransactionId(UUID transactionId);
 
-    boolean findByUserId(String userId);
+    boolean existsByUserId(String userId);
 }

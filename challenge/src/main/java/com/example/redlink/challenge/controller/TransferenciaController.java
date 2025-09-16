@@ -12,7 +12,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/transferencia")
@@ -41,34 +40,27 @@ public class TransferenciaController {
     ) {
         Optional<Transferencia> transferenciaOpt = transferenciaService.consultarEstadoTransferencia(id);
 
-        if (transferenciaOpt.isEmpty()) {
+        if (transferenciaOpt.isEmpty())
             return ResponseEntity.notFound().build();
-        }
 
-        Transferencia transferencia = transferenciaOpt.get();
-
-        if (moneda != null && tasa != null) {
-            if (!divisaServices.monedaCorrecta(moneda)) {
-                return ResponseEntity.badRequest().build();
-            }
-            transferencia.setAmount(transferencia.getAmount());
-            transferencia.setCurrency(moneda);
-        }
-
+        Transferencia transferencia = aplicarConversionIfHaveParam(
+                transferenciaOpt.get(),
+                moneda,
+                tasa
+        );
         return ResponseEntity.ok(transferencia);
     }
 
     // Caso c
     @GetMapping("/user/{userId}/aprobadas")
     public ResponseEntity<List<Transferencia>> listarAprobadas(
-            @PathVariable String userId,
-            @RequestParam(required = false) String moneda,
-            @RequestParam(required = false) BigDecimal tasa
+            @PathVariable String userId
     ) {
-        List<Transferencia> aprobadas = transferenciaService.listarTransferenciaAprobadas(userId)
-                .stream()
-                .map(t -> aplicarConversion(t, moneda, tasa))
-                .collect(Collectors.toList());
+        if (!transferenciaService.existeUsuario(userId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Transferencia> aprobadas = transferenciaService.listarTransferenciaAprobadas(userId);
 
         return ResponseEntity.ok(aprobadas);
     }
@@ -76,26 +68,20 @@ public class TransferenciaController {
     // Caso d
     @GetMapping("/user/{userId}/historial")
     public ResponseEntity<List<Transferencia>> historial(
-            @PathVariable String userId,
-            @RequestParam(required = false) String moneda,
-            @RequestParam(required = false) BigDecimal tasa
+            @PathVariable String userId
     ) {
-        boolean existeUsuario = transferenciaService.existeUsuario(userId);
-        if (existeUsuario) {
-            List<Transferencia> historial;
-            historial = transferenciaService.obtenerHistorialTransacciones(userId)
-                    .stream()
-                    .map(t -> aplicarConversion(t, moneda, tasa))
-                    .toList();
-            return ResponseEntity.ok(historial);
-        } else {
+        if (!transferenciaService.existeUsuario(userId)) {
             return ResponseEntity.notFound().build();
         }
+
+        List<Transferencia> historial = transferenciaService.obtenerHistorialTransacciones(userId);
+
+        return ResponseEntity.ok(historial);
     }
 
-    private Transferencia aplicarConversion(Transferencia t, String moneda, BigDecimal tasa) {
+    private Transferencia aplicarConversionIfHaveParam(Transferencia t, String moneda, BigDecimal tasa) {
+        // Si existen parametros de moneda y tasa entonces hace el cambio
         if (moneda != null && tasa != null) {
-
             if (tasa.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("La tasa de conversión debe ser mayor a 0");
             }

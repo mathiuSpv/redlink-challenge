@@ -19,9 +19,16 @@
    ```
    git clone https://github.com/mathiuSpv/redlink-challenge
    ```
-2. Abrir el proyecto (Si es con IntelliJ mejor) el pom.xml, automaticamente estan se instalan las dependencias del proyecto
-   (Caso de no ser con IntelliJ descargar Maven 4.0.0).
-3. En ese instante Ya podes correr ChallengeApplication
+2. Abrir el proyecto (Si es con IntelliJ mejor), puede saltar error en dependencias o project structure (ver punto 3).
+3. Caso de que sucedio error verificar que se tiene.
+   - dependencias
+      ```bash
+      mvn -v
+      #Si existe corres
+      mvn clean install -U
+      ````
+   - project structure: Elegir un SDK 21
+4. En ese instante Ya podes correr ChallengeApplication
 
 ## Recursos disponibles
 ### Swagger

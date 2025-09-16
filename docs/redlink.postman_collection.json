@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "85511e0a-af33-4469-a118-b2995ca6495f",
+		"name": "redlink",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36557650"
+	},
+	"item": [
+		{
+			"name": "ENDPOINT POST transferencia",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"userId\": \"1234\",\r\n   \"amount\": 1400.00,\r\n   \"currency\": \"ARS\",\r\n   \"bankCode\": \"BANK123\",\r\n   \"recipientAccount\": \"DE89370400440532013000\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transferencia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ENDPOINT GET transferencia",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transferencia/550e8400-e29b-41d4-a716-446655440001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transferencia",
+						"550e8400-e29b-41d4-a716-446655440001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "END POINT GET transferencia + conversion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transferencia/550e8400-e29b-41d4-a716-446655440001?moneda=usd&tasa=1.3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transferencia",
+						"550e8400-e29b-41d4-a716-446655440001"
+					],
+					"query": [
+						{
+							"key": "moneda",
+							"value": "usd"
+						},
+						{
+							"key": "tasa",
+							"value": "1.3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ENDPOINT POST transferencia dolares",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"userId\": \"1234\",\r\n   \"amount\": 1,\r\n   \"currency\": \"USD\",\r\n   \"bankCode\": \"BANK123\",\r\n   \"recipientAccount\": \"DE89370400440532013000\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transferencia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ENDPOINT GET obtener transferencias aprobadas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transferencia/user/1234/aprobadas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transferencia",
+						"user",
+						"1234",
+						"aprobadas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ENDPOINT GET obtener todas las transferencias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transferencia/user/4321/historial",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transferencia",
+						"user",
+						"1234",
+						"historial"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
